@@ -1,38 +1,54 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket, faTags } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+
+export default function Header () {
+  const navLinkClass =
+    "text-center text-lg font-primary font-semibold text-primary py-2";
+
   return (
-    <header className="header">
-      <div className="container">
-        <a href="/" className="link">
-          <FontAwesomeIcon icon={faTags} className="fa-icon" />
-          <span className="brand-title">Eazy Stickers</span>
+    <header className="border-b border-gray-300 sticky top-0 z-20 bg-gray-100">
+      <div className="flex items-center justify-between max-w[1152px] mx-auto px-6 py-4">
+        <a href="/" className={navLinkClass}>
+          <FontAwesomeIcon icon={faTags} className="h-8 w-8" />
+          <span className="font-bold">Eazy Stickers</span>
         </a>
-        <nav className="nav">
-          <ul>
+        <nav className="flex items-center py-2 z-10">
+          <ul className="flex space-x-6">
             <li>
-              <a href="/" className="nav-link">
+              <a
+                href="/"
+                className="text-center text-lg font-primary font-semibold text-primary"
+              >
                 Home
               </a>
             </li>
             <li>
-              <a href="/" className="nav-link">
+              <a
+                href="/about"
+                className="text-center text-lg font-primary font-semibold text-primary py-2"
+              >
                 About
               </a>
             </li>
             <li>
-              <a href="/" className="nav-link">
+              <a
+                href="/contact"
+                className="navtext-center text-lg font-primary font-semibold text-primary py-2"
+              >
                 Contact
               </a>
             </li>
             <li>
-              <a href="/" className="nav-link">
+              <a
+                href="/login"
+                className="text-center text-lg font-primary font-semibold text-primary py-2"
+              >
                 Login
               </a>
             </li>
             <li>
-              <a href="/" className="nav-link">
+              <a href="/cart" className="text-primary py-2">
                 <FontAwesomeIcon icon={faShoppingBasket} className="fa-icon" />
               </a>
             </li>
@@ -43,4 +59,3 @@ const Header = () => {
   );
 };
 
-export default Header;
