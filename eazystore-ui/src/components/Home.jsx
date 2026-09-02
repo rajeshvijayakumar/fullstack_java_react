@@ -1,8 +1,22 @@
 import PageHeading from "./PageHeading";
 import ProductListings from "./ProductListings";
-import products from "../data/product";
+import apiClient from "../api/apiClient";
+import { useState, useEffect } from "react";
 
-export default function Home()  {
+export default function Home() {
+  const [products, setProducts] = useState([]);
+  
+  // Run once when the component mounts
+  // Mounting is the process of creating and adding the component into DOM
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    const response = await apiClient.get("/products");
+    setProducts(response.data);
+  };
+
   return (
     <div className="max-w-[1152px] mx-auto px-6 py-8">
       <PageHeading title="Explore Eazy Stickers!">
@@ -12,4 +26,4 @@ export default function Home()  {
       <ProductListings products={products} />
     </div>
   );
-};
+}
