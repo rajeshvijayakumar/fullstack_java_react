@@ -2,9 +2,13 @@ import React, { useMemo } from "react";
 import ProductCard from "./ProductCard";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
+import DropDown from "./DropDown";
+
+const sortList = ["Popularity", "Price Low to High", "Price High to Low"];
 
 export default function ProductListings({ products }) {
   const [searchText, setSearchText] = useState("");
+  const [selectedSort, setSelectedSort] = useState("Popularity");
 
   const filteredAndSortedProducts = useMemo(() => {
     if (!Array.isArray(products)) {
@@ -17,13 +21,26 @@ export default function ProductListings({ products }) {
         product.description.toLowerCase().includes(searchText.toLowerCase()),
     );
 
-    return filteredProducts.slice().sort((a,b) => {
-        return parseInt(b.popularity) - parseInt(a.popularity);
+    return filteredProducts.slice().sort((a, b) => {
+        switch (selectedSort) {
+          case "Price Low to High":
+             return parseFloat(a.price) - parseFloat(b.price);
+          case "Price High to Low":
+             return parseFloat(b.price) - parseFloat(a.price);
+          case "Popularity":
+          default:
+            return parseInt(b.popularity) - parseInt(a.popularity);
+        }
+      
     });
-  }, [products, searchText]);
+  }, [products, searchText, selectedSort]);
 
   function handleSearchChange(inputSearch) {
     setSearchText(inputSearch);
+  }
+
+  function handleSortChange(sortType) {
+    setSelectedSort(sortType);
   }
 
   return (
@@ -35,6 +52,13 @@ export default function ProductListings({ products }) {
           value={searchText}
           handlesearch={(value) => handleSearchChange(value)}
         />
+
+        <DropDown 
+          label="Sort by"
+          options={sortList}
+          value={selectedSort}
+          handleSort={(value) => handleSortChange(value)} />
+
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6 py-12">
         {filteredAndSortedProducts.length > 0 ? (
