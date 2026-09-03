@@ -20,6 +20,7 @@ public class ProductController {
     @GetMapping
     public List<ProductDto> getProducts() {
 
+        System.out.println("Hello Product controller");
         List<ProductDto> productList = iProductService.getProducts();
 
         return productList;
